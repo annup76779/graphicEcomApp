@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os, json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,17 +75,11 @@ WSGI_APPLICATION = 'ecomApp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': "graphicsApp",
-        'USER': 'root',
-        'PASSWORD': '8Ctz:U6wNZ3>',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+with open(os.path.join(BASE_DIR, "conf.json"), 'r') as db_conf:
+    conf = json.load(db_conf)
+    DATABASES = {
+        'default': conf
     }
-}
 
 
 # Password validation

@@ -1,0 +1,8 @@
+{
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": "DATABASE NAME",
+    "USER": "DATABASE USER",
+    "PASSWORD": "PASSWORD",
+    "HOST": "127.0.0.1",
+    "PORT": "3306"
+}
