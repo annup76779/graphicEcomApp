@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from mainApp.models import Graphics
 
 class UploadGraphicsForm(forms.ModelForm):
@@ -11,3 +12,5 @@ class UploadGraphicsForm(forms.ModelForm):
             'discount': forms.NumberInput(attrs = {'class': 'form-control'}),
             'discription': forms.Textarea(attrs = {'class': 'form-control'})
         }
+
+

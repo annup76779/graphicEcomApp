@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-yd4l=+w$2_#r14f2=x$m67x4lsp6+p74l%9dxk8(5+!x#^ty23
 DEBUG = True
 
 ALLOWED_HOSTS = []
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 
 # Application definition
@@ -39,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "mainApp"
+    "mainApp",
+    "members",
+    "checkout"
 ]
 
 MIDDLEWARE = [
@@ -71,16 +74,27 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ecomApp.wsgi.application'
+STRIPE_CURRENCY = os.environ.get('STRIPE_CURRENCY')
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 
-
-# Database
+# Database MySQL
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-with open(os.path.join(BASE_DIR, "conf.json"), 'r') as db_conf:
-    conf = json.load(db_conf)
-    DATABASES = {
-        'default': conf
+# with open(os.path.join(BASE_DIR, "conf.json"), 'r') as db_conf:
+#     conf = json.load(db_conf)
+#     DATABASES = {
+#         'default': conf
+#     }
+DATABASES = {
+    'default': {
+        "ENGINE": os.environ.get("DB_ENGINE", ""), #DB_ENGINE="django.db.backends.mysql"
+        "NAME": os.environ.get("DB_NAME", ""),
+        "USER": os.environ.get("DB_USER", ""),
+        "PASSWORD": os.environ.get("DB_PASSWORD", ""),
+        "HOST": os.environ.get("DB_HOST", ""),
+        "PORT": os.environ.get("DB_PORT", "")
     }
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

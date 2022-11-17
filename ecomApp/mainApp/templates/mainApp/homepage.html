@@ -1,0 +1,71 @@
+{% extends 'mainApp/layout.html' %}
+
+{% block content %}
+{% load custom_filters %}
+{% load static %}
+<div class="service-container col-10 offset-1">
+    <h1 class="text-center">Graphics</h1>
+    <div class="row">
+        {% for graphic in graphics %}
+        
+            {% if graphic.discount and graphic.discount >= 0 %}
+            <!-- if there is a discount -->
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="card h-100 border-1">
+                    <a href="{% url 'showcase' graphic.id %}">
+                        <div class="img-container">
+                            <img src="{% get_media_prefix %}{{graphic.media}}" class="img-fluid element" alt="..." style="max-height: 100%;">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <span class="offer">
+                            {{graphic.discount}}% OFF
+                        </span>
+
+                        <h6 class="card-text">{{ graphic.title }}</h6>
+                        {% if graphic.cost <= 0 %}
+                        <h5> Free </h5>
+                        {% else %}
+                        <h5>
+                            <strike class="text-secondary">${{ graphic.cost }}</strike>
+                            ${{graphic.cost|discount:graphic.discount}}
+                        </h5>
+                        {% endif %}
+                        <a href="{% url 'index' %}?q={{graphic.tag}}" class="text-secondary" style="text-decoration: none;">
+                            <i class="bi bi-tags"></i>
+                            {{graphic.tag}}
+                        </a><br>
+                        <!-- <span class="text-secondary"><i class="bi bi-star"></i> 3.5 out of 5</span> -->
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3" >
+                <div class="card h-100 border-1">
+                    <a href="{% url 'showcase' graphic.id %}">
+                        <div class="img-container">
+                            <img src="{% get_media_prefix %}{{graphic.media}}" class="img-fluid element" alt="..." style="max-height: 100%;">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <h6 class="card-text">{{graphic.title}}</h6>
+                        {% if graphic.cost <= 0 %}
+                        <h5> Free </h5>
+                        {% else %}
+                        <h5>${{graphic.cost}}</h5>
+                        {% endif %}
+                        <a href="{% url 'index' %}?q={{graphic.tag}}" class="text-secondary" style="text-decoration: none;">
+                            <i class="bi bi-tags"></i>
+                            {{graphic.tag}}
+                        </a><br>
+                        <!-- <span class="text-secondary"><i class="bi bi-star"></i> 4.5 out of 5</span> -->
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

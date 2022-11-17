@@ -1,8 +1,8 @@
 {
     "ENGINE": "django.db.backends.mysql",
-    "NAME": "DATABASE NAME",
-    "USER": "DATABASE USER",
-    "PASSWORD": "PASSWORD",
+    "NAME": "graphicsapp",
+    "USER": "root",
+    "PASSWORD": "8Ctz:U6wNZ3>",
     "HOST": "127.0.0.1",
     "PORT": "3306"
 }

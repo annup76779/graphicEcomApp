@@ -20,7 +20,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('app/', include("mainApp.urls")),
+    path('', include("mainApp.urls")),
+    path('members/', include("django.contrib.auth.urls")),
+    path('members/', include("members.urls")),
+    path('checkout/', include("checkout.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
