@@ -58,6 +58,8 @@ def checkout(request):
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
         }
+        save_info = request.POST.get('save_info')
+        print('save_info', save_info)
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -76,17 +78,7 @@ def checkout(request):
                         )
                         order_line_item.save()
                     else:
-                        # # this code is deprecated in favor of new update to the code according to my project
-                        # # database model
 
-                        # for size, quantity in item_data['items_by_size'].items():
-                        #     order_line_item = OrderLineItem(
-                        #         order=order,
-                        #         product=graphics,
-                        #         quantity=quantity,
-                        #         product_size=size,
-                        #     )
-                        #     order_line_item.save()
                         messages.error(request, "Not a valid request.")
                         return redirect("index")
                 except Product.DoesNotExist:
@@ -104,7 +96,6 @@ def checkout(request):
                 Please double check your information.')
     else:
         bag = Cart.current_user_cart(request.user)
-        print(bag)
         if bag[0] == 0:
             messages.error(request, "There's nothing in your bag at the moment")
             return redirect(reverse('index'))
@@ -117,7 +108,6 @@ def checkout(request):
             amount=stripe_total,
             currency=settings.STRIPE_CURRENCY,
         )
-        print(intent)
 
         order_form = OrderForm()
 

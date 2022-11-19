@@ -73,7 +73,33 @@
         width: 100px;
         height: 100px;
       }
+      .rate-btn{
+        display: none;
+      }
+      .rate label{
+        border-radius: 50%;
+        padding-left: 13px;
+        padding-right: 13px;
+        margin: 20px;
+      }
 
+      .trend-div{
+        position: absolute;
+        right: 5%;
+        bottom: 18%;
+        font-size: 20px;
+      }
+      .hover_text{
+        color: white;
+      }
+      .hover_text:hover{
+        color: blue;
+      }
+      .prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
     </style>
 </head>
 <body>
@@ -92,19 +118,11 @@
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
               </li>
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 
-                  Services
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                  <li><a class="dropdown-item" href="#">Web Developement</a></li>
-                  <li><a class="dropdown-item" href="#">Graphic Design</a></li>
-                  <li><a class="dropdown-item" href="#">Blogging Site</a></li>
-                  <li><a class="dropdown-item" href="#">Landing Pages</a></li>
-                </ul>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Shop</a>
               </li>
 
               <li class="nav-item dropdown">
@@ -112,15 +130,17 @@
                   Graphics
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown1">
-                  <li><a class="dropdown-item" href="#">Logo</a></li>
-                  <li><a class="dropdown-item" href="#">UI/UX</a></li>
-                  <li><a class="dropdown-item" href="#">Drawing</a></li>
-                  <li><a class="dropdown-item" href="#">Illustration</a></li>
+                  {% for tag in tags %}
+                    <li><a class="dropdown-item" href="{% url 'index' %}?q={{tag}}">{{tag}}</a></li>
+                  {% endfor %}
                 </ul>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Portfolio</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'portfolio' %}">Portfolio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active btn btn-outline-info text-light" aria-current="page" href="{% url 'wishlist' %}">Wishlist</a>
               </li>
               {% if not user.is_authenticated %}
               <li class="nav-item">
@@ -141,9 +161,9 @@
     </nav>
     {% if user.is_authenticated %}
     <div class="col-lg-12 text-end p-3">
-        <span class="account_info" style="font-size:20px;">@{{user}}</span>
+        <a href="{% url 'profile' %}" class="account_info" style="font-size:20px;">@{{user}}</a>
         <button class="btn btn-light" style="text-decoration: none;font-weight: bold; font-size: 25px; display: inline-block;" data-cart="0" onclick="toogle_cart_div(this);">
-          <i class="bi bi-cart3"></i>
+          <i class="bi bi-bag-check"></i>
           <span style="font-size: 20px;" id="cart_count">{{cart_data.0}}</span>
         </button>
     </div>
@@ -221,7 +241,7 @@
       {% if messages %}
           <ul class="messages">
               {% for message in messages %}
-              <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+              <li{% if message.tags %} class="alert alert-dismissible fade show alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
               {% endfor %}
           </ul>
       {% endif %}
@@ -230,7 +250,10 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="col-lg-12 p-5 bg-light" style="position: relative; top: 85%;">
+    <footer class="col-lg-12 p-5 text-light mt-5 bg-dark" style="position: relative; top: 85%;">
+      <div class="col-lg-12 text-center mb-3">
+        <a href="{% url 'newsletter' %}" class="text-light" style="font-size: 25px;">Register to newsletter</a>
+      </div>
       <div class="row">
         <div class="col-lg-4">
           Social Media handles
@@ -250,9 +273,22 @@
 {% block js_block %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+ <!-- importin the strip payment module of js. -->
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
+
+  // function remove all the alerts in the webpage
+  function removeAlert(class_name){
+    document.querySelector(`.${class_name}`).remove();
+  }
+
+  window.onload  = function() {
+    // starting the interval of 6 seconds before removeing the alerts in the site.
+    setInterval(removeAlert, 6000, "alert")
+  }
+
   function toogle_cart_div(el){
     var status = parseInt(el.getAttribute("data-cart"));
     target = document.getElementById("cart-div");

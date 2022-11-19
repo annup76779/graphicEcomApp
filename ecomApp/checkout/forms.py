@@ -1,5 +1,6 @@
 from django import forms
 from .models import Order
+from members.models import Profile
 
 
 class OrderForm(forms.ModelForm):

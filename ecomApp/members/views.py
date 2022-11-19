@@ -2,8 +2,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from members.models import Profile
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ProfileForm
 
 
 def registerTemplate(request):
@@ -46,8 +47,8 @@ def login_user(request):
         print(user)
         if user is not None:
             login(request, user)
-            messages.success(request, "Login kr lie ab gand mrao.")
-            return redirect(login_user)
+            messages.success(request, f"Welcome {user.username}!")
+            return redirect("index")
         else:
             messages.info(request, "There was an error loggin in, Try again.")
             return redirect(login_user)
@@ -59,3 +60,36 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.info(request, "User logged out.")
+
+
+def profile_page(request):
+    if request.method == "POST":
+        try:
+            profile = Profile.objects.get(user=request.user)
+            profile.delete()
+        except Profile.DoesNotExist:
+            pass
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+            'country': request.POST['country'],
+            'postcode': request.POST['postcode'],
+            'town_or_city': request.POST['town_or_city'],
+            'street_address1': request.POST['street_address1'],
+            'street_address2': request.POST['street_address2'],
+            'county': request.POST['county'],
+        }
+        print(form_data)
+        profile_form = ProfileForm(form_data)
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False)
+            profile.user =request.user
+            profile.save()
+            return redirect('index')
+        else:
+            messages.error(request, "Please will all the details properly.")
+            return redirect('profile')
+    else:
+        form = ProfileForm()
+        return render(request, "members/profile.html", {"form": form})

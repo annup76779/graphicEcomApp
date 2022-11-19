@@ -1,10 +1,20 @@
 {% extends 'mainApp/layout.html' %}
+{% load static %}
 
 {% block content %}
-
-<div class="container-fluid" style="max-height: 800px;padding: 0px;">
-        <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?cs=srgb&dl=pexels-pixabay-60597.jpg&fm=jpg" style="max-height: 600px; width: 100%;">
-
-
-</div>
+    <div class="container-fluid"  style="background: url('https://images.pexels.com/photos/1757363/pexels-photo-1757363.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: 100% 100%; height: 700px;">
+        <div class="row h-100">
+                <div class="col-lg-3"></div>
+            <div class="col-lg-6 col-md-6 my-auto" style="background-color: rgba(1,1,1,0.3); padding: 2%;">
+                <h1 class="display-4 logo-font hover_text prevent-select " >
+                    The new collections are here
+                </h1>
+                <div class="my-5">
+                    <h4>
+                        <a href="{% url 'index' %}" class="shop-now-button btn btn-lg btn-dark rounded-0 text-uppercase py-3">Shop Now</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

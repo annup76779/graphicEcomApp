@@ -1,0 +1,33 @@
+{% extends 'mainApp/layout.html' %}
+
+{% block content %}
+{% load custom_filters %}
+{% load static %}
+ <div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd3ui957tjb5bqd.cloudfront.net%2Fuploads%2F2020%2F06%2F11092310%2FGraphic-Design-Portfolio-Tips-8.jpg&f=1&nofb=1&ipt=07eb457caf3e744c1ce1dcad3c0e6113aec8c445055f945dedf9559c42c0a73b&ipo=images" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F7b%2Ff4%2Fc3%2F7bf4c35d29dd122daee253c4caafebc6.jpg&f=1&nofb=1&ipt=36f915795585795854d28142e9c0ed4531eef0ec773bab9e05dc3f923737de00&ipo=images" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmir-s3-cdn-cf.behance.net%2Fprojects%2Fmax_808%2Fa6290f55468697.Y3JvcCwxOTk5LDE1NjQsMTcyLDA.jpg&f=1&nofb=1&ipt=64ce9feb4673316005846738a7fc79803529032a21135c1821838ff2dcdedaff&ipo=images" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <div class="col-lg-12 text-center">
+        <h1>All my Graphics works</h1>
+        <span class="text-secondary"><em>This is my work</em></span>
+      </div>
+ </div>
+{% endblock %}
