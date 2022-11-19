@@ -1,0 +1,20 @@
+{% extends 'mainApp/layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        {% for testimonial_data in testimonial %}
+        <div class="col-lg-12 m-3 p-3 bg-light">
+            <div class="row">
+                <div class="col-lg-1 ">
+                    <img src="{% get_media_prefix %}{{testimonial_data.media}}" alt="" srcset="" style="height: 100px; width: 100px;border-radius: 50%;">
+                </div>
+                <div class="col-lg-11">
+                    <h4>{{testimonial_data.user}}</h4>
+                    {{testimonial_data.message}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

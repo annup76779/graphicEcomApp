@@ -37,7 +37,7 @@
                             </a><br>
                             {% if user.is_authenticated %}
                                 <div class="trend-div" id="f5a4dbc7-eda6-43f4-bf09-25f94e5ea347_trend_status" title="Trending status" data-value="1">
-                                    <form action="{% url 'remove_from_wishlist' graphic.0.id %}" method="get">
+                                    <form action="{% url 'add_to_wishlist' graphic.0.id %}" method="get">
                                         {% if graphic.1 %}
                                             <input type="hidden" name="wishlistData" value="0">
                                         {% else %}

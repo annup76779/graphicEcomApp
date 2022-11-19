@@ -78,15 +78,25 @@
                                     <i class="bi bi-tags"></i>
                                     {{graphic.0.tag}}
                                 </a><br>
+                                {% if user.is_authenticated %}
                                 <div class="trend-div" id="f5a4dbc7-eda6-43f4-bf09-25f94e5ea347_trend_status" title="Trending status" data-value="1">
                                     <form action="{% url 'remove_from_wishlist' graphic.0.id %}" method="get">
-                                        <input type="hidden" name="wishlistData" value="1">
+                                        {% if graphic.1 %}
+                                            <input type="hidden" name="wishlistData" value="0">
+                                        {% else %}
+                                            <input type="hidden" name="wishlistData" value="1">
+                                        {% endif %}
+                                        
                                         <button type="submit" style="background-color: white; border: none;">
-                                            <i class="bi bi-suit-heart" style="color: rgb(0, 0, 0); font-weight: bold;"></i>
+                                            {% if graphic.1 %}
+                                                <i class="bi bi-suit-heart-fill" style="color: rgb(199, 0, 0); font-weight: bold;"></i>
+                                            {% else %}
+                                                <i class="bi bi-suit-heart" style="color: rgb(0, 0, 0); font-weight: bold;"></i>
+                                            {% endif %}
                                         </button>
                                     </form>
-
                                 </div>
+                            {% endif %}
                                 <!-- <span class="text-secondary"><i class="bi bi-star"></i> 4.5 out of 5</span> -->
                             </div>
                         </div>

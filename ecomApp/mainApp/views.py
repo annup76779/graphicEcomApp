@@ -197,8 +197,11 @@ def remove_from_wishlist(request, graphic_id):
 @login_required
 def wishlist(request):
     wishlist = [[wish.graphics, wish.id] for wish in request.user.wishlist_set.all()]
-    return render(request, "mainApp/wishlist.html", {"wishlist": wishlist})
+    return render(request, "mainApp/wishlist.html", {"wishlist": wishlist, "cart_data": template_cart_data(request.user)})
 
 
 def portfolio(request):
-    return render(request, "mainApp/portfolio.html")
+    return render(request, "mainApp/portfolio.html", {"cart_data": template_cart_data(request.user)})
+
+def testimonial(request):
+    return render(request, "mainApp/testimonial.html", {"testimonial": Testimonial.objects.all(),"cart_data": template_cart_data(request.user)})

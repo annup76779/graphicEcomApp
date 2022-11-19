@@ -25,19 +25,17 @@ class SendEmail(models.Model):
     body = models.TextField(null=False, blank=False)
     submit_time = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
         return self.subject
 
 
 @receiver(post_save, sender=SendEmail)
 def delete_graphics_on_graphics_update(sender, instance, **kwargs):
-    """
-        senf newsletter mail to all the recipients at the schduled time.
-    """
-    send_mail(
+    background_task = Thread(target = send_mail, args=(
         instance.subject,
-        instance.body,
+        instance.body
+    ), kwargs=dict(
         from_email=None,
-        recipient_list = [str(email) for email in Newsletter.objects.all()]
-    )
+        recipient_list=[str(email) for email in Newsletter.objects.all()]
+    ))
+    background_task.run()

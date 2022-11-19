@@ -14,4 +14,5 @@ urlpatterns = [
     path("app/wishlist", views.wishlist, name = 'wishlist'),
     path("app/remove_from_wishlist/<graphic_id>", views.remove_from_wishlist, name = 'remove_from_wishlist'),
     path("portfolio", views.portfolio, name = 'portfolio'),
+    path("testimonial", views.testimonial, name = 'testimonial'),
 ]

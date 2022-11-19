@@ -140,17 +140,6 @@ class Review(models.Model):
         ]
 
 
-class Contact(models.Model):
-    """Model to make the contact request to the admin"""
-
-    email = models.CharField(max_length=200, null=False, blank=False)
-    name = models.CharField(max_length=255, blank=False, null=False)
-    message = models.TextField(blank=False, null=False)
-
-    def __str__(self):
-        return f"{self.id}. {self.name}({self.email})"
-
-
 class Wishlist(models.Model):
     """The support for the Wishlist"""
 
